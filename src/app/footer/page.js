@@ -64,7 +64,7 @@ function Footer() {
   return (
     <>
       {/* {isMobile ? <HomeHeroSecMobile /> : <HomeHeroSection/>} */}
-      <FollowInsta ImageUrls={imageItemUrls} VideoUrls={videoItemUrls} LinkUrls ={linkItemUrls}/>
+      {/* <FollowInsta ImageUrls={imageItemUrls} VideoUrls={videoItemUrls} LinkUrls ={linkItemUrls}/> */}
       <PrivacySec/>
       <Address ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/> 
 

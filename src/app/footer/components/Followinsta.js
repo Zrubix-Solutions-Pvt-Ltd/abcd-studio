@@ -1,15 +1,12 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-if (typeof window !== 'undefined' && gsap && !gsap.core.globals().ScrollTrigger) {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
 const transparentImage =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5ErkJggg=";
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5ErkJggg=';
 
 function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
   const containerRef = useRef(null);
@@ -17,59 +14,76 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
   const videosContainerRef = useRef(null);
   const videoItemRefs = useRef([]);
 
-  // Build your list safely (fixing the image13/14 mismatch)
+  // Register ScrollTrigger on client
+  useEffect(() => {
+    if (!gsap.core.globals().ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+  }, []);
+
   const imageItemUrls = ImageUrls || {};
   const linkItemUrls = LinkUrls || {};
-  const instagramVideos = [
-    imageItemUrls.image9?.url && {
+
+  // Build list without filter(Boolean)
+  const instagramVideos = [];
+  if (imageItemUrls.image9?.url) {
+    instagramVideos.push({
       id: 1,
       videoUrl:
-        "https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        'https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
       thumbnailUrl: imageItemUrls.image9.url,
-      videoalt: "Play Video 1",
-      alt: imageItemUrls.image9.altText || "Instagram Reel 1",
-    },
-    imageItemUrls.image9?.url && {
+      videoalt: 'Play Video 1',
+      alt: imageItemUrls.image9.altText || 'Instagram Reel 1',
+    });
+    instagramVideos.push({
       id: 2,
       videoUrl:
-        "https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        'https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
       thumbnailUrl: imageItemUrls.image9.url,
-      alt: imageItemUrls.image9.altText || "Instagram Reel 2",
-      videoalt: "Play Video 2",
-    },
-    imageItemUrls.image10?.url && {
+      alt: imageItemUrls.image9.altText || 'Instagram Reel 2',
+      videoalt: 'Play Video 2',
+    });
+  }
+  if (imageItemUrls.image10?.url) {
+    instagramVideos.push({
       id: 3,
       videoUrl:
-        "https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        'https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
       thumbnailUrl: imageItemUrls.image10.url,
-      alt: imageItemUrls.image10.altText || "Instagram Reel 3",
-      videoalt: "Play Video 3",
-    },
-    imageItemUrls.image11?.url && {
+      alt: imageItemUrls.image10.altText || 'Instagram Reel 3',
+      videoalt: 'Play Video 3',
+    });
+  }
+  if (imageItemUrls.image11?.url) {
+    instagramVideos.push({
       id: 4,
       videoUrl:
-        "https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        'https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
       thumbnailUrl: imageItemUrls.image11.url,
-      alt: imageItemUrls.image11.altText || "Instagram Reel 4",
-      videoalt: "Play Video 4",
-    },
-    imageItemUrls.image12?.url && {
+      alt: imageItemUrls.image11.altText || 'Instagram Reel 4',
+      videoalt: 'Play Video 4',
+    });
+  }
+  if (imageItemUrls.image12?.url) {
+    instagramVideos.push({
       id: 5,
       videoUrl:
-        "https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        'https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
       thumbnailUrl: imageItemUrls.image12.url,
-      videoalt: "Play Video 5",
-      alt: imageItemUrls.image12.altText || "Instagram Reel 5",
-    },
-    imageItemUrls.image13?.url && {
+      videoalt: 'Play Video 5',
+      alt: imageItemUrls.image12.altText || 'Instagram Reel 5',
+    });
+  }
+  if (imageItemUrls.image13?.url) {
+    instagramVideos.push({
       id: 6,
       videoUrl:
-        "https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        'https://www.instagram.com/reel/DM5mzg4Tnbv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
       thumbnailUrl: imageItemUrls.image13.url,
-      alt: imageItemUrls.image13.altText || "Instagram Reel 6", // fixed
-      videoalt: "Play Video 6",
-    },
-  ].filter(Boolean);
+      alt: imageItemUrls.image13.altText || 'Instagram Reel 6',
+      videoalt: 'Play Video 6',
+    });
+  }
 
   const handleVideoClick = (videoUrl) => {
     if (typeof window !== 'undefined') {
@@ -77,14 +91,14 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
     }
   };
 
-  // GSAP intro anims (kept simple)
+  // GSAP intro anims
   useEffect(() => {
     const container = containerRef.current;
     const headerBar = headerBarRef.current;
     const videosContainer = videosContainerRef.current;
     const videoItems = videoItemRefs.current.filter(Boolean);
 
-    if (headerBar) {
+    if (headerBar && container) {
       gsap.fromTo(
         headerBar,
         { opacity: 0, y: -40 },
@@ -102,7 +116,7 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
       );
     }
 
-    if (videosContainer) {
+    if (videosContainer && container) {
       gsap.fromTo(
         videosContainer,
         { opacity: 0, y: 30 },
@@ -120,7 +134,7 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
       );
     }
 
-    if (videoItems.length) {
+    if (videoItems.length && videosContainer) {
       gsap.fromTo(
         videoItems,
         { opacity: 0, scale: 0.96, y: 14 },
@@ -167,7 +181,7 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
     };
     const onMoveAbs = (x, e) => {
       if (!isDown) return;
-      if (e && e.cancelable) e.preventDefault();
+      if (e && e.cancelable && typeof e.preventDefault === 'function') e.preventDefault();
       const delta = startX - x;
       track.scrollLeft = startScroll + delta;
     };
@@ -225,7 +239,6 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
           color: #fff;
           display: grid;
           grid-template-rows: auto 1fr;
-        
         }
 
         .header-bar {
@@ -236,7 +249,7 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
           position: sticky;
           top: 0;
           z-index: 2;
-          border-bottom: 1px solid rgba(255,255,255,0.12);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.12);
           backdrop-filter: blur(8px);
         }
 
@@ -247,18 +260,18 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
           font-family: system-ui, Arial, sans-serif;
           font-weight: 800;
           letter-spacing: 0.05em;
-          text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
         .header-text a {
           color: #fff;
           text-decoration: none;
-          border-bottom: 1px dashed rgba(255,255,255,0.7);
+          border-bottom: 1px dashed rgba(255, 255, 255, 0.7);
         }
 
         /* Horizontal ROW — no wrap at any size */
         .videos-container {
           display: flex;
-          flex-wrap: nowrap;           /* force single row */
+          flex-wrap: nowrap;
           gap: 16px;
           padding: 20px 16px 28px;
           overflow-x: auto;
@@ -266,20 +279,22 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
           -webkit-overflow-scrolling: touch;
           scrollbar-width: thin;
           scrollbar-color: #596070 transparent;
-          touch-action: pan-x;         /* allow horizontal gestures */
+          touch-action: pan-x;
           cursor: grab;
         }
         .videos-container.dragging {
           cursor: grabbing;
         }
-        .videos-container::-webkit-scrollbar { height: 10px; }
+        .videos-container::-webkit-scrollbar {
+          height: 10px;
+        }
         .videos-container::-webkit-scrollbar-thumb {
           background: linear-gradient(90deg, #586070, #394052);
           border-radius: 10px;
         }
 
         .video-item-group {
-          flex: 0 0 auto;              /* prevent shrinking and wrap */
+          flex: 0 0 auto;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -290,20 +305,15 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
           width: clamp(180px, 32vw, 260px);
           height: clamp(180px, 32vw, 260px);
           background-color: #1a2230;
-          background-size: cover;
-          background-position: center;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          position: relative;
+          position: relative; /* required for next/image fill */
           overflow: hidden;
           border-radius: 12px;
           transition: transform 0.25s ease, box-shadow 0.25s ease;
-          border: 1px solid rgba(255,255,255,0.1);
-          box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
         }
         .video-thumbnail:hover {
-          box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
           transform: translateY(-2px);
         }
 
@@ -313,7 +323,7 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
           width: 100%;
           margin-top: 236px;
           gap: 8px;
-              position: absolute;
+          position: absolute;
         }
         .track-line {
           flex-grow: 1;
@@ -357,20 +367,18 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
           margin-left: 3px;
         }
 
-        .transparent-alt-image {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          opacity: 0;
-        }
-
-        /* IMPORTANT: keep horizontal layout on all breakpoints (no column switch) */
         @media (max-width: 520px) {
-          .videos-container { gap: 14px; padding: 16px; }
-          .video-thumbnail { width: 70vw; height: 70vw; }
-          .horizontal-track { max-width: 70vw; }
+          .videos-container {
+            gap: 14px;
+            padding: 16px;
+          }
+          .video-thumbnail {
+            width: 70vw;
+            height: 70vw;
+          }
+          .horizontal-track {
+            max-width: 70vw;
+          }
         }
       `}</style>
 
@@ -394,7 +402,9 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
             <div
               key={video.id}
               className="video-item-group"
-              ref={(el) => (videoItemRefs.current[index] = el)}
+              ref={(el) => {
+                if (el) videoItemRefs.current[index] = el;
+              }}
             >
               <a
                 href={video.videoUrl}
@@ -402,14 +412,15 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
                 rel="noopener noreferrer"
                 aria-label={video.alt}
               >
-                <div
-                  className="video-thumbnail"
-                  style={{ backgroundImage: `url(${video.thumbnailUrl})` }}
-                >
-                  <img
-                    src={transparentImage}
+                <div className="video-thumbnail">
+                  <Image
+                    src={video.thumbnailUrl || transparentImage}
                     alt={video.alt}
-                    className="transparent-alt-image"
+                    fill
+                    sizes="(max-width: 520px) 70vw, 32vw"
+                    priority={false}
+                    loading="lazy"
+                    style={{ objectFit: 'cover' }}
                   />
                 </div>
               </a>
@@ -423,11 +434,6 @@ function FollowInsta({ ImageUrls = {}, VideoUrls = {}, LinkUrls = {} }) {
                     aria-label={video.videoalt}
                     title={video.videoalt}
                   >
-                    <img
-                      src={transparentImage}
-                      alt={video.videoalt}
-                      className="transparent-alt-image"
-                    />
                     <div className="play-icon" />
                   </div>
                 </div>

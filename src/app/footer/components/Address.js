@@ -1,20 +1,19 @@
 'use client';
 
-
 import React from 'react';
+import Image from 'next/image';
 
-function Address({ImageUrls,VideoUrls}) {
+const transparentImage =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5ErkJggg=';
 
-  
-      let imageItemUrls = ImageUrls
-      let videoItemUrls = VideoUrls
+function Address({ ImageUrls = {}, VideoUrls = {} }) {
+  const imageItemUrls = ImageUrls || {};
+  const videoItemUrls = VideoUrls || {};
 
-      const Logoimg = 
-        {
-          src: imageItemUrls.image15.url,
-      alt: imageItemUrls.image15.altText
-        }
-      
+  // Resolve logo image with fallback
+  const logoSrc = imageItemUrls?.image15?.url || transparentImage;
+  const logoAlt = imageItemUrls?.image15?.altText || 'Logo';
+
   return (
     <>
       <style jsx>{`
@@ -99,18 +98,12 @@ function Address({ImageUrls,VideoUrls}) {
           margin-top: 20px;
         }
 
-        .address-rto-info img {
-          width: 100px;
-          height: auto;
-          margin-right: 15px;
-        }
-
         .address-rto-text {
           display: flex;
           flex-direction: column;
           font-size: 15px;
           font-weight: bold;
-          margin-top:0;
+          margin-top: 0;
         }
 
         .address-newsletter-header h3 {
@@ -150,8 +143,8 @@ function Address({ImageUrls,VideoUrls}) {
           font-weight: 600;
         }
 
-        .address-newsletter-form input[type="text"],
-        .address-newsletter-form input[type="email"] {
+        .address-newsletter-form input[type='text'],
+        .address-newsletter-form input[type='email'] {
           width: 100%;
           padding: 15px;
           margin-bottom: 25px;
@@ -205,10 +198,7 @@ function Address({ImageUrls,VideoUrls}) {
           font-size: large;
         }
 
-        /* Media Queries */
-
-        /* For screens up to 1000px (e.g., larger tablets, smaller desktops) */
-       @media (max-width: 1000px) {
+        @media (max-width: 1000px) {
           .address-footer-container {
             flex-direction: column;
             align-items: center;
@@ -216,7 +206,9 @@ function Address({ImageUrls,VideoUrls}) {
             text-align: center;
             gap: 30px;
           }
-          .address-left-section, .address-right-section, .address-newsletter-form {
+          .address-left-section,
+          .address-right-section,
+          .address-newsletter-form {
             min-width: unset;
             width: 100%;
             max-width: 400px;
@@ -224,14 +216,13 @@ function Address({ImageUrls,VideoUrls}) {
             text-align: center;
           }
           .address-contact-item {
-            justify-content: center; /* Center icons and text */
+            justify-content: center;
           }
           .vertical-separator {
-            display: none; /* Hide separator on smaller screens */
+            display: none;
           }
         }
 
-        /* For screens up to 900px (e.g., tablets in landscape) */
         @media (max-width: 900px) {
           .address-footer-container {
             flex-direction: column;
@@ -240,7 +231,9 @@ function Address({ImageUrls,VideoUrls}) {
             text-align: center;
             gap: 30px;
           }
-          .address-left-section, .address-right-section, .address-newsletter-form {
+          .address-left-section,
+          .address-right-section,
+          .address-newsletter-form {
             min-width: unset;
             width: 100%;
             max-width: 400px;
@@ -248,14 +241,13 @@ function Address({ImageUrls,VideoUrls}) {
             text-align: center;
           }
           .address-contact-item {
-            justify-content: center; /* Center icons and text */
+            justify-content: center;
           }
           .vertical-separator {
-            display: none; /* Hide separator on smaller screens */
+            display: none;
           }
         }
 
-        /* For screens up to 768px (e.g., tablets in portrait) */
         @media (max-width: 768px) {
           .address-footer-container {
             padding: 30px 15px;
@@ -280,8 +272,8 @@ function Address({ImageUrls,VideoUrls}) {
             margin-top: 20px;
             margin-bottom: 20px;
           }
-          .address-newsletter-form input[type="text"],
-          .address-newsletter-form input[type="email"],
+          .address-newsletter-form input[type='text'],
+          .address-newsletter-form input[type='email'],
           .address-newsletter-form button {
             padding: 12px;
             font-size: 16px;
@@ -291,13 +283,8 @@ function Address({ImageUrls,VideoUrls}) {
             align-items: center;
             margin-top: 20px;
           }
-          .address-rto-info img {
-            margin-bottom: 10px;
-            margin-right: 0;
-          }
         }
 
-        /* For screens up to 600px (e.g., larger mobile devices) */
         @media (max-width: 600px) {
           .address-footer-container {
             padding: 25px 10px;
@@ -322,15 +309,14 @@ function Address({ImageUrls,VideoUrls}) {
             margin-top: 15px;
             margin-bottom: 15px;
           }
-          .address-newsletter-form input[type="text"],
-          .address-newsletter-form input[type="email"],
+          .address-newsletter-form input[type='text'],
+          .address-newsletter-form input[type='email'],
           .address-newsletter-form button {
             padding: 10px;
             font-size: 14px;
           }
         }
 
-        /* For screens up to 480px (e.g., smaller mobile devices) */
         @media (max-width: 480px) {
           .address-footer-container {
             padding: 20px 5px;
@@ -355,12 +341,12 @@ function Address({ImageUrls,VideoUrls}) {
             margin-top: 10px;
             margin-bottom: 10px;
           }
-          .address-newsletter-form input[type="text"],
-          .address-newsletter-form input[type="email"],
+          .address-newsletter-form input[type='text'],
+          .address-newsletter-form input[type='email'],
           .address-newsletter-form button {
-                    padding: 15px;
-        font-size: 12px;
-        width: 75%;
+            padding: 15px;
+            font-size: 12px;
+            width: 75%;
           }
           .address-rto-text p {
             font-size: 13px;
@@ -371,7 +357,10 @@ function Address({ImageUrls,VideoUrls}) {
       <div className="address-footer-container">
         <div className="address-left-section">
           <div className="address-logo-section">
-            <p className="address-logo-text"><span style={{ color: 'white' }}>★</span>ABCD<span style={{ color: 'white' }}>★</span></p>
+            <p className="address-logo-text">
+              <span style={{ color: 'white' }}>★</span>ABCD
+              <span style={{ color: 'white' }}>★</span>
+            </p>
             <p className="address-logo-subtext">STUDIOS SALEM</p>
           </div>
 
@@ -397,7 +386,16 @@ function Address({ImageUrls,VideoUrls}) {
           </div>
 
           <div className="address-rto-info">
-            <img src={Logoimg.src} alt={Logoimg.alt} />
+            {/* next/image for logo */}
+            <Image
+              src={logoSrc}
+              alt={logoAlt}
+              width={120}         // adjust to your design
+              height={40}         // keep aspect ratio close to your logo
+              priority={false}
+              loading="lazy"
+              style={{ height: 'auto', width: 'auto', maxWidth: '100%' }}
+            />
             <div className="address-rto-text">
               <p className="address-paragraph-style">RTO 40479</p>
               <p className="address-paragraph-style">CRICOS 04174A</p>
@@ -409,7 +407,7 @@ function Address({ImageUrls,VideoUrls}) {
 
         <div className="address-newsletter-form">
           <div className="address-newsletter-header">
-            <h3>Let's get to know each other.</h3>
+           <h3>Let&apos;s get to know each other.</h3>
             <p className="address-paragraph-style">STAY IN THE LOOP</p>
           </div>
           <label htmlFor="name">Name</label>

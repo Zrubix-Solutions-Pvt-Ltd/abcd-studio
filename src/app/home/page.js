@@ -7,9 +7,9 @@ import dynamic from 'next/dynamic'; // Import dynamic from next/dynamic
 import { HomeHeroSection, HomeHeroSecMobile } from './components/HomeHeroSection';
 // import Header from '../header/page'; // Remove direct import
 import WelcomeStudio from './components/WelcomeStudio';
-import WhatsOn from './components/WhatsOn';
+import { Whatson, WhatsonMobile } from './components/WhatsOn';
 import MenuImagesSection from './components/MenuImageSection';
-import Backstage from './components/Backstage';
+import {Backstage,BackstageMobile} from './components/Backstage';
 
 // Dynamically import Header with ssr: false
 const Header = dynamic(() => import('../header/page'), { ssr: false });
@@ -80,9 +80,12 @@ function HomePage() {
       {/* <HomeHeroSection/> */}
       {isMobile ? <HomeHeroSecMobile LinkUrls ={linkItemUrls} ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/> : <HomeHeroSection LinkUrls ={linkItemUrls} ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/>}
       <WelcomeStudio/>
-      <WhatsOn ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/>
+      {isMobile ? <WhatsonMobile LinkUrls ={linkItemUrls} ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/> : <Whatson LinkUrls ={linkItemUrls} ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/>}
+      {/* <WhatsOn ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/> */}
       <MenuImagesSection ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/>
-      <Backstage ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/>
+      {/* <Backstage ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/> */}
+      {isMobile ? <BackstageMobile LinkUrls ={linkItemUrls} ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/> : <Backstage LinkUrls ={linkItemUrls} ImageUrls={imageItemUrls} VideoUrls={videoItemUrls}/>}
+
       <Footer/> 
     </>
   );
