@@ -26,57 +26,57 @@ export function Backstage({ ImageUrls, VideoUrls }) {
   const mainImageRef = useRef(null);
   const rightSectionRef = useRef(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const container = containerRef.current;
+  // useEffect(() => {
+  //   const ctx = gsap.context(() => {
+  //     const container = containerRef.current;
 
-      gsap.fromTo(
-        titlePart3Ref.current,
-        { x: -300 },
-        {
-          x: 40,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: container,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-          },
-        }
-      );
+  //     gsap.fromTo(
+  //       titlePart3Ref.current,
+  //       { x: -300 },
+  //       {
+  //         x: 40,
+  //         ease: 'none',
+  //         scrollTrigger: {
+  //           trigger: container,
+  //           start: 'top bottom',
+  //           end: 'bottom top',
+  //           scrub: true,
+  //         },
+  //       }
+  //     );
 
-      gsap.to(titlePart3Ref.current, {
-        keyframes: {
-          color: ['#000000', '#ff0015ff', '#239de9ff', '#1de6ceff'],
-          easeEach: 'none',
-        },
-        ease: 'none',
-        scrollTrigger: {
-          trigger: container,
-          start: 'top 85%',
-          end: 'bottom 20%',
-          scrub: true,
-        },
-      });
+  //     gsap.to(titlePart3Ref.current, {
+  //       keyframes: {
+  //         color: ['#000000', '#ff0015ff', '#239de9ff', '#1de6ceff'],
+  //         easeEach: 'none',
+  //       },
+  //       ease: 'none',
+  //       scrollTrigger: {
+  //         trigger: container,
+  //         start: 'top 85%',
+  //         end: 'bottom 20%',
+  //         scrub: true,
+  //       },
+  //     });
 
-      gsap.fromTo(
-        mainImageRef.current,
-        { scale: 0.9 },
-        {
-          scale: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: container,
-            start: 'top 99%',
-            end: 'top 30%',
-            scrub: true,
-          },
-        }
-      );
-    }, containerRef);
+  //     gsap.fromTo(
+  //       mainImageRef.current,
+  //       { scale: 0.9 },
+  //       {
+  //         scale: 1,
+  //         ease: 'none',
+  //         scrollTrigger: {
+  //           trigger: container,
+  //           start: 'top 99%',
+  //           end: 'top 30%',
+  //           scrub: true,
+  //         },
+  //       }
+  //     );
+  //   }, containerRef);
 
-    return () => ctx.revert();
-  }, []);
+  //   return () => ctx.revert();
+  // }, []);
 
   return (
     <>

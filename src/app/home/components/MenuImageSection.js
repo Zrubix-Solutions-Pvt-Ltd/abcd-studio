@@ -47,41 +47,41 @@ function MenuImagesSection({ ImageUrls, VideoUrls }) {
     if (typeof window === 'undefined') return;
 
     // Card entrance
-    const entrance = gsap.fromTo(
-      cardRefs.current,
-      { opacity: 0, y: 50, scale: 0.95 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.7,
-        ease: 'power3.out',
-        stagger: 0.12,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
+    // const entrance = gsap.fromTo(
+    //   cardRefs.current,
+    //   { opacity: 0, y: 50, scale: 0.95 },
+    //   {
+    //     opacity: 1,
+    //     y: 0,
+    //     scale: 1,
+    //     duration: 0.7,
+    //     ease: 'power3.out',
+    //     stagger: 0.12,
+    //     scrollTrigger: {
+    //       trigger: containerRef.current,
+    //       start: 'top 85%',
+    //       toggleActions: 'play none none none',
+    //     },
+    //   }
+    // );
 
     // Image entrance (wraps)
-    const imgEntrance = gsap.fromTo(
-      imgWrapRefs.current,
-      { opacity: 0.6, scale: 1.1 },
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 0.9,
-        ease: 'power2.out',
-        stagger: 0.12,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
+    // const imgEntrance = gsap.fromTo(
+    //   imgWrapRefs.current,
+    //   { opacity: 0.6, scale: 1.1 },
+    //   {
+    //     opacity: 1,
+    //     scale: 1,
+    //     duration: 0.9,
+    //     ease: 'power2.out',
+    //     stagger: 0.12,
+    //     scrollTrigger: {
+    //       trigger: containerRef.current,
+    //       start: 'top 85%',
+    //       toggleActions: 'play none none none',
+    //     },
+    //   }
+    // );
 
     // Parallax for each image wrapper
     const parallaxTriggers = imgWrapRefs.current

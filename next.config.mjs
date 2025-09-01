@@ -12,6 +12,8 @@ const nextConfig = {
       'm.media-amazon.com',
       'encrypted-tbn0.gstatic.com',
       'www.freeiconspng.com',
+      'static.vecteezy.com',
+      'pi.tedcdn.com',
       '...']
     // or remotePatterns: [{ protocol: 'https', hostname: '**' }]
   },

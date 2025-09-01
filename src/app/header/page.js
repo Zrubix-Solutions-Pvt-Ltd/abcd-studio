@@ -1,10 +1,19 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 
+// Define menu items as a JSON array
 const menuItems = [
-  { title: 'HOME', link: '/', type: 'link' },
-  { title: 'OUR STUDIO', link: '/our-studio', type: 'link' },
+  {
+    title: 'HOME',
+    link: '/', // Changed to a unique ID for demonstration
+    type: 'link',
+  },
+  {
+    title: 'OUR STUDIO',
+    link: '/our-studio',
+    type: 'link',
+  },
   {
     title: 'CLASSES',
     type: 'dropdown',
@@ -16,7 +25,7 @@ const menuItems = [
       { name: 'Private', link: '/class-details?name=private' },
     ],
   },
-  {
+ {
     title: 'EVENTS',
     type: 'dropdown',
     submenu: [
@@ -27,11 +36,17 @@ const menuItems = [
       { name: 'Collage Event', link: '/events/collage-event' },
     ],
   },
-  { title: 'CONTACT', link: '/contact', type: 'link' },
+  {
+    title: 'CONTACT',
+    link: '/contact',
+    type: 'link',
+  },
 ];
 
 // Helper function to determine the active link based on the current URL
 const getActiveLink = () => {
+  if (typeof window === 'undefined') return {}; 
+
   const currentPath = window.location.pathname;
   const currentSearch = window.location.search;
   const fullCurrentUrl = currentPath + currentSearch;
@@ -58,13 +73,13 @@ const getActiveLink = () => {
   return { main: null, sub: null }; // No active link found
 };
 
-
 function Header() {
   const [isSticky, setIsSticky] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(getActiveLink()); // Initialize with hash
   const socialLayerRef = useRef(null);
-  const headerRef = useRef(null);
-  const [headerHeight, setHeaderHeight] = useState(0);
+  const headerRef = useRef(null); // Ref for the header element
+  const [headerHeight, setHeaderHeight] = useState(0); // State to store header height
   const [activeLink, setActiveLink] = useState({ main: null, sub: null });
 
   useEffect(() => {
@@ -162,7 +177,7 @@ function Header() {
           align-items: center;
           justify-content: space-between;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-          transition: all 0.3s ease-in-out;
+          transition: all 0.3s ease-in-out; /* Smooth transition for all properties */
           position: relative;
           z-index: 1000;
         }
@@ -177,6 +192,7 @@ function Header() {
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
           padding: 1.5rem 12rem;
           box-sizing: border-box;
+          transition: all 0.3s ease-in-out; /* Ensure smooth transition for sticky state */
         }
 
         .header-root .header-logo {
@@ -464,7 +480,7 @@ function Header() {
         }
       `}</style>
 
-      <div className="header-root">
+     <div className="header-root">
         {/* Social Layer */}
         <div className="social-layer-container" ref={socialLayerRef}>
           <div className="social-layer-text">JOIN OUR COMMUNITY OF OVER 200,000+ DREAMERS & DOERS</div>
