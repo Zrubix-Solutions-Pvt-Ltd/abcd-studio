@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 // Define menu items as a JSON array
 const menuItems = [
@@ -47,7 +48,7 @@ const menuItems = [
 const getActiveLink = () => {
   if (typeof window === 'undefined') return {}; 
 
-  const currentPath = window.location.pathname;
+  const currentPath = window.location.pathname;//ll
   const currentSearch = window.location.search;
   const fullCurrentUrl = currentPath + currentSearch;
 
