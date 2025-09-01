@@ -1,7 +1,7 @@
 // src/app/HomePage.jsx
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Head from 'next/head'; // Import Head for meta tags
 import Script from 'next/script'; // Import Script for JSON-LD
 import dynamic from 'next/dynamic';
@@ -128,7 +128,7 @@ function HomePage() {
         }}
       />
 
-      <Header />
+      <Suspense><Header /></Suspense>
       {isMobile ? <HomeHeroSecMobile LinkUrls={linkItemUrls} ImageUrls={imageItemUrls} VideoUrls={videoItemUrls} /> : <HomeHeroSection LinkUrls={linkItemUrls} ImageUrls={imageItemUrls} VideoUrls={videoItemUrls} />}
       <WelcomeStudio />
       {isMobile ? <WhatsonMobile LinkUrls={linkItemUrls} ImageUrls={imageItemUrls} VideoUrls={videoItemUrls} /> : <Whatson LinkUrls={linkItemUrls} ImageUrls={imageItemUrls} VideoUrls={videoItemUrls} />}
