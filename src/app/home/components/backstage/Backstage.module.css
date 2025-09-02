@@ -1,0 +1,158 @@
+.backstage-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 60px 40px;
+  gap: 150px;
+  flex-wrap: wrap;
+}
+
+.backstage-left-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.backstage-title-part1 {
+  font-family: "Georgia", serif;
+  font-size: 2.5rem;
+  font-style: italic;
+  color: black;
+  margin-bottom: -10px;
+}
+
+.backstage-title-part2 {
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-size: 5rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: black;
+  margin-bottom: -10px;
+  margin-top: 0;
+  line-height: 0.95;
+}
+
+.backstage-title-part3 {
+  font-family: "Georgia", serif;
+  font-size: 2.5rem;
+  font-style: italic;
+  color: black;
+  margin-bottom: 30px;
+  margin-top: 0;
+  margin-left: 280px; /* GSAP animates x */
+  will-change: transform, color;
+}
+
+.backstage-listen-button {
+  background-color: black;
+  color: white;
+  font-family: "Impact", "Arial", sans-serif;
+  font-size: 1rem;
+  padding: 15px 30px;
+  border: 2px solid black;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.backstage-listen-button:hover {
+  background-color: #fff;
+  color: black;
+}
+
+/* Right side: sticky; make it positioning context for star */
+.backstage-right-section {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 80px;
+  padding: 20px;
+  border: 1px solid #293039;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  height: fit-content;
+}
+
+/* Image box for Next/Image fill */
+.backstage-main-image {
+  width: 700px;
+  max-width: 700px;
+  height: 400px;
+  position: relative; /* required for fill */
+  display: block;
+  object-fit: cover;
+  overflow: hidden; /* clip cover */
+  will-change: transform;
+}
+
+.backstage-star-icon {
+  position: absolute;
+  top: -40px;
+  right: -20px;
+  width: 80px;
+  height: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .backstage-container {
+    flex-direction: column;
+    padding: 30px;
+    gap: 30px;
+  }
+
+  .backstage-left-section {
+    align-items: center;
+    text-align: center;
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .backstage-title-part1,
+  .backstage-title-part2,
+  .backstage-title-part3 {
+    font-size: 1.8rem;
+    margin-bottom: 0;
+    margin-left: 0;
+  }
+
+  .backstage-title-part2 {
+    font-size: 3.5rem;
+    line-height: 1;
+  }
+
+  .backstage-title-part3 {
+    font-size: 2rem;
+  }
+
+  .backstage-listen-button {
+    padding: 12px 25px;
+    font-size: 0.9rem;
+  }
+
+  .backstage-right-section {
+    width: 90%;
+    padding: 15px;
+    position: static; /* disable sticky on small screens */
+  }
+
+  .backstage-main-image {
+    width: 100%;
+    max-width: 100%;
+    height: 250px;
+  }
+
+  .backstage-star-icon {
+    top: -10px;
+    right: -10px;
+    width: 60px;
+  }
+}

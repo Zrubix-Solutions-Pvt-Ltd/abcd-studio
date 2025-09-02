@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { gsap } from 'gsap';
 
 import Header from '../header/page';
 import Footer from '../footer/page';
 import ContactHeroSection from './components/ContactHeroSection';
 import ContactForm from './components/ContactForm';
-import ContactInfo from './components/ContactInfo';
+import ContactInfo from './components/contactinfo/ContactInfo';
 
 function Contact() {
   const [isMobile, setIsMobile] = useState(false);

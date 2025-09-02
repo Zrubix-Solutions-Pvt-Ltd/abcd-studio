@@ -1,0 +1,41 @@
+.privacy-container {
+  font-family: 'Arial', sans-serif;
+  color: black;
+  padding: 60px 60px;
+  text-align: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.privacy-paragraph {
+  margin-bottom: 25px;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.privacy-link {
+  color: #0000EE; /* Standard blue link color */
+  text-decoration: underline;
+}
+
+.privacy-footer {
+  margin-top: 40px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .privacy-container {
+    padding: 40px 20px;
+  }
+
+  .privacy-paragraph {
+    font-size: 15px;
+  }
+
+  .privacy-footer {
+    font-size: 14px;
+  }
+}
