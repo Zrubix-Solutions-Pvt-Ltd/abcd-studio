@@ -29,6 +29,7 @@ const nextConfig = {
       'static.wixstatic.com',
       'topdancefloor.com',
       'whataftercollege.com',
+      'images.unsplash.com',
 
       // ADDED from your classData usage
       'islarosedanceacademy.com',

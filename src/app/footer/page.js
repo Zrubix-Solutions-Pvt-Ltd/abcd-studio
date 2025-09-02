@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 
 import FollowInsta from './components/Followinsta';
-import Address from './components/Address';
-import PrivacySec from './components/PrivacySection';
+import Address from './components/address/Address';
+import PrivacySec from './components/privacysection/PrivacySection';
 
 function Footer() {
   const [isMobile, setIsMobile] = useState(false);

@@ -1,0 +1,84 @@
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  overflow: hidden;
+  min-height: 60vh;
+}
+
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  /* background-image is set inline to keep your dynamic SVG */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 0;
+  will-change: transform;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.image-container {
+  background-color: #293039;
+  padding: 18px;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.image-container :global(img) {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.whats-on-text,
+.arrow-image {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.whats-on-text {
+  top: 20%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  max-width: 100%;
+  aspect-ratio: 4 / 1;
+}
+
+.arrow-image {
+  top: 80%;
+  right: 5%;
+  transform: translate(0%, -50%);
+  width: 30%;
+  max-width: 100%;
+  aspect-ratio: 3 / 1;
+}
+
+@media (max-width: 768px) {
+  .content {
+    gap: 14px;
+  }
+  .whats-on-text,
+  .arrow-image {
+    display: none; /* hide overlays on mobile */
+  }
+}

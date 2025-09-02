@@ -1,0 +1,88 @@
+.contact-info-wrapper {
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.contact-info-title {
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  font-size: 2.5em;
+  color: black;
+  margin-top: 0;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+.contact-cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.contact-card {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: black;
+  padding: 30px;
+  border-radius: 8px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.contact-card svg {
+  width: 50px;
+  height: 50px;
+  fill: black;
+  margin-bottom: 15px;
+}
+
+.contact-card p {
+  font-size: 1.1em;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.map-container {
+  width: 100%;
+  max-width: 1150px;
+  margin: 0 auto;
+  height: 450px;
+  border: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .contact-info-title {
+    font-size: 2em;
+  }
+  .contact-info-wrapper {
+    padding: 30px 20px;
+    text-align: center;
+  }
+  .contact-cards-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact-card {
+    width: 75%;
+    max-width: 250px;
+  }
+  .map-container {
+    height: 300px;
+  }
+}

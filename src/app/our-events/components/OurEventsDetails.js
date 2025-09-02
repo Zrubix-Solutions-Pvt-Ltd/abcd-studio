@@ -1,9 +1,10 @@
+// OurStudioEventsDetails.jsx
 'use client';
 
-import React, { useEffect, useRef, useState, Suspense, useMemo } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { classData } from "./ClassData";
+import { EventData } from "./EventsData";
 
 import Image from "next/image";
 import Header from "../../header/page";
@@ -12,13 +13,12 @@ import Footer from "../../footer/page";
 import { useSearchParams } from "next/navigation";
 
 import { Helmet } from "react-helmet";
-import "./OurStudioClassDetails.css"; // new external CSS
+import styles from "./OurStudioEventsDetails.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // ------------------------ HERO ------------------------
-
-function ClassDetailsHeroSec({ hero }) {
+function EventsDetailsHeroSec({ hero }) {
   const sectionRef = useRef(null);
   const imageWrapRef = useRef(null);
   const titleRef = useRef(null);
@@ -81,7 +81,6 @@ function ClassDetailsHeroSec({ hero }) {
       }
     );
 
-    // Small shrink effect on scroll
     const shrinkTl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -104,33 +103,27 @@ function ClassDetailsHeroSec({ hero }) {
         <meta name="description" content="View detailed information about our classes." />
       </Helmet>
 
-      <div className="ContactHero-section" ref={sectionRef}>
-        <div className="ContactHero-image-wrap" ref={imageWrapRef}>
+      <div className={styles.contactHeroSection} ref={sectionRef}>
+        <div className={styles.contactHeroImageWrap} ref={imageWrapRef}>
           <Image
             src={hero?.backgroundImage || ""}
             alt="Contact Hero Background"
             width={1920}
             height={1080}
             priority
-            className="ContactHero-background-image"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              display: "block",
-              filter: "brightness(0.5)",
-            }}
+            className={styles.contactHeroBackgroundImage}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "brightness(0.5)" }}
           />
         </div>
-        <div className="ContactHero-blur-overlay"></div>
-        <div className="ContactHero-content-overlay">
-          <h1 className="ContactHero-title" ref={titleRef}>
+        <div className={styles.contactHeroBlurOverlay}></div>
+        <div className={styles.contactHeroContentOverlay}>
+          <h1 className={styles.contactHeroTitle} ref={titleRef}>
             {hero?.title || ""}{" "}
-            <span className="ContactHero-star-icon" ref={starRef}>
+            <span className={styles.contactHeroStarIcon} ref={starRef}>
               &#9733;
             </span>
           </h1>
-          <h2 className="ContactHero-subtitle" ref={subtitleRef}>
+          <h2 className={styles.contactHeroSubtitle} ref={subtitleRef}>
             {hero?.subtitle || ""}
           </h2>
         </div>
@@ -140,12 +133,10 @@ function ClassDetailsHeroSec({ hero }) {
 }
 
 // ------------------------ GALLERY ------------------------
-function ClassDetailsImages({ gallery }) {
+function EventsDetailsImages({ gallery }) {
   const rowRefs = useRef([]);
 
   const images = Array.isArray(gallery?.images) ? gallery.images : [];
-
-  // Group into 2-3-2-3
   const rows = [
     images.slice(0, 2),
     images.slice(2, 5),
@@ -178,19 +169,17 @@ function ClassDetailsImages({ gallery }) {
   }, []);
 
   return (
-    <div className="image-grid-container">
-      <h2 className="gallery-heading">{gallery?.title || ""}</h2>
+    <div className={styles.imageGridContainer}>
+      <h2 className={styles.galleryHeading}>{gallery?.title || ""}</h2>
       {rows.map((row, rowIndex) => (
         <div
           key={rowIndex}
-          className={`image-row ${
-            row.length === 2 ? "image-row-2-cols" : "image-row-3-cols"
-          }`}
+          className={`${styles.imageRow} ${row.length === 2 ? styles.imageRow2Cols : styles.imageRow3Cols}`}
           ref={(el) => (rowRefs.current[rowIndex] = el)}
         >
           {row.map((image, imageIndex) => (
-            <div key={`${rowIndex}-${imageIndex}`} className="image-card">
-              <div className="image-wrapper">
+            <div key={`${rowIndex}-${imageIndex}`} className={styles.imageCard}>
+              <div className={styles.imageWrapper}>
                 <Image
                   src={image.src}
                   alt={image.alt || ""}
@@ -214,6 +203,8 @@ function DanceClassLayout({ layout }) {
   const menuRefs = useRef({});
 
   const menuItems = useMemo(() => layout?.menuItems || [], [layout?.menuItems]);
+  theContent: {
+  }
   const contentData = layout?.contentData || {};
   const currentContent = contentData[activeMenuItem] || {};
 
@@ -229,13 +220,13 @@ function DanceClassLayout({ layout }) {
     menuItems.forEach((item) => {
       const menuItemElement = menuRefs.current[item.id];
       if (menuItemElement) {
-        gsap.to(menuItemElement.querySelector(".menu-item-arrow"), {
+        gsap.to(menuItemElement.querySelector(`.${styles.menuItemArrow}`), {
           opacity: 0,
           x: 0,
           duration: 0.3,
           ease: "power1.out",
         });
-        gsap.to(menuItemElement.querySelector(".menu-item-text"), {
+        gsap.to(menuItemElement.querySelector(`.${styles.menuItemText}`), {
           color: "#fff",
           duration: 0.3,
           ease: "power1.out",
@@ -245,13 +236,13 @@ function DanceClassLayout({ layout }) {
 
     const activeMenuItemElement = menuRefs.current[activeMenuItem];
     if (activeMenuItemElement) {
-      gsap.to(activeMenuItemElement.querySelector(".menu-item-arrow"), {
+      gsap.to(activeMenuItemElement.querySelector(`.${styles.menuItemArrow}`), {
         opacity: 1,
         x: 0,
         duration: 0.3,
         ease: "power1.out",
       });
-      gsap.to(activeMenuItemElement.querySelector(".menu-item-text"), {
+      gsap.to(activeMenuItemElement.querySelector(`.${styles.menuItemText}`), {
         color: "#fff",
         duration: 0.3,
         ease: "power1.out",
@@ -261,12 +252,12 @@ function DanceClassLayout({ layout }) {
 
   const handleMouseEnter = (e, itemId) => {
     if (itemId !== activeMenuItem) {
-      gsap.to(e.currentTarget.querySelector(".menu-item-text"), {
+      gsap.to(e.currentTarget.querySelector(`.${styles.menuItemText}`), {
         color: "#ccc",
         duration: 0.3,
         ease: "power1.out",
       });
-      gsap.to(e.currentTarget.querySelector(".menu-item-arrow"), {
+      gsap.to(e.currentTarget.querySelector(`.${styles.menuItemArrow}`), {
         opacity: 0.5,
         x: 5,
         duration: 0.3,
@@ -277,12 +268,12 @@ function DanceClassLayout({ layout }) {
 
   const handleMouseLeave = (e, itemId) => {
     if (itemId !== activeMenuItem) {
-      gsap.to(e.currentTarget.querySelector(".menu-item-text"), {
+      gsap.to(e.currentTarget.querySelector(`.${styles.menuItemText}`), {
         color: "#fff",
         duration: 0.3,
         ease: "power1.out",
       });
-      gsap.to(e.currentTarget.querySelector(".menu-item-arrow"), {
+      gsap.to(e.currentTarget.querySelector(`.${styles.menuItemArrow}`), {
         opacity: 0,
         x: 0,
         duration: 0.3,
@@ -292,35 +283,35 @@ function DanceClassLayout({ layout }) {
   };
 
   return (
-    <div className="dance-layout-container">
-      <div className="sidebar">
-        <h4 className="sidebar-heading">DANCE STAGES</h4>
-        <ul className="menu-list">
+    <div className={styles.danceLayoutContainer}>
+      <div className={styles.sidebar}>
+        <h4 className={styles.sidebarHeading}>DANCE STAGES</h4>
+        <ul className={styles.menuList}>
           {menuItems.map((item, index) => (
             <React.Fragment key={item.id}>
               <li
-                className={`menu-item ${activeMenuItem === item.id ? "active" : ""}`}
+                className={`${styles.menuItem} ${activeMenuItem === item.id ? styles.active : ""}`}
                 onClick={() => setActiveMenuItem(item.id)}
                 onMouseEnter={(e) => handleMouseEnter(e, item.id)}
                 onMouseLeave={(e) => handleMouseLeave(e, item.id)}
                 ref={(el) => (menuRefs.current[item.id] = el)}
               >
-                <span className="menu-item-text">{item.label}</span>
-                <span className="menu-item-arrow">→</span>
+                <span className={styles.menuItemText}>{item.label}</span>
+                <span className={styles.menuItemArrow}>→</span>
               </li>
               {index < menuItems.length - 1 && (
-                <div className="menu-item-divider"></div>
+                <div className={styles.menuItemDivider}></div>
               )}
             </React.Fragment>
           ))}
         </ul>
       </div>
 
-      <div className="content-area" ref={contentRef}>
-        <h2 className="content-title">{currentContent.title}</h2>
-        <p className="content-text">{currentContent.text}</p>
+      <div className={styles.contentArea} ref={contentRef}>
+        <h2 className={styles.contentTitle}>{currentContent.title}</h2>
+        <p className={styles.contentText}>{currentContent.text}</p>
         {currentContent.imageSrc && (
-          <div className="content-image-wrapper">
+          <div className={styles.contentImageWrapper}>
             <Image
               src={currentContent.imageSrc}
               alt={
@@ -340,7 +331,7 @@ function DanceClassLayout({ layout }) {
 }
 
 // ------------------------ VIDEOS ------------------------
-function ClassDetailsVideos({ videos }) {
+function EventsDetailsVideos({ videos }) {
   const videoGridRef = useRef(null);
   const headingRef = useRef(null);
   const containerRef = useRef(null);
@@ -383,20 +374,20 @@ function ClassDetailsVideos({ videos }) {
   const links = Array.isArray(videos?.videoLinks) ? videos.videoLinks : [];
 
   return (
-    <div ref={containerRef} className="video-grid-container">
-      <h2 ref={headingRef} className="video-gallery-heading">
+    <div ref={containerRef} className={styles.videoGridContainer}>
+      <h2 ref={headingRef} className={styles.videoGalleryHeading}>
         {videos?.title || ""}
       </h2>
-      <div ref={videoGridRef} className="video-grid">
+      <div ref={videoGridRef} className={styles.videoGrid}>
         {links.map((video, index) => (
-          <div key={index} className="video-card">
+          <div key={index} className={styles.videoCard}>
             <iframe
               src={video.src}
               title={video.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-            <div className="video-info">
+            <div className={styles.videoInfo}>
               <h4>{video.title}</h4>
             </div>
           </div>
@@ -406,26 +397,25 @@ function ClassDetailsVideos({ videos }) {
   );
 }
 
-
 // ------------------------ PAGE WRAPPER ------------------------
-function OurStudioClassDetails() {
+function OurStudioEventsDetails() {
   const searchParams = useSearchParams();
   const name = searchParams?.get("name");
 
-  // Pick from URL if valid, else fallback to "kids"
-  const classKey = name && classData[name] ? name : "kids";
-  const data = classData[classKey];
+  // Pick from URL if valid, else fallback to "wedding"
+  const classKey = name && EventData[name] ? name : "wedding";
+  const data = EventData[classKey];
 
   return (
     <>
       <Header />
-      <ClassDetailsHeroSec hero={data.hero} />
+      <EventsDetailsHeroSec hero={data.hero} />
       <DanceClassLayout layout={data.layout} />
-      <ClassDetailsImages gallery={data.gallery} />
-      <ClassDetailsVideos videos={data.videos} />
+      <EventsDetailsImages gallery={data.gallery} />
+      <EventsDetailsVideos videos={data.videos} />
       <Footer />
     </>
   );
 }
 
-export default OurStudioClassDetails;
+export default OurStudioEventsDetails;

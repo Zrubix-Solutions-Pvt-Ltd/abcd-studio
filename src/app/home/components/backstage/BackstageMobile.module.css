@@ -1,0 +1,96 @@
+.backstage-mobile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #fff;
+  padding: 30px 24px;
+  gap: 24px;
+}
+
+.backstage-mobile-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  gap: 4px;
+}
+
+.title-part1 {
+  font-family: "Georgia", serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: #000;
+  margin: 0;
+}
+
+.title-part2 {
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #000;
+  margin: 0;
+  line-height: 1;
+}
+
+.title-part3 {
+  font-family: "Georgia", serif;
+  font-size: 1.8rem;
+  font-style: italic;
+  color: #000;
+  margin: 4px 0 8px 0; /* simple spacing, no animated offset */
+}
+
+.listen-btn {
+  margin-top: 8px;
+  background-color: #000;
+  color: #fff;
+  font-family: "Impact", "Arial", sans-serif;
+  font-size: 0.95rem;
+  padding: 12px 22px;
+  border: 2px solid #000;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.listen-btn:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Right section holds main image and the star placed at same spot as mobile */
+.backstage-mobile-right {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  padding: 0; /* no border/sticky in mobile */
+}
+
+.main-image-box {
+  width: 100%;
+  height: 250px; /* same as your mobile breakpoint */
+  position: relative; /* Next/Image fill */
+  overflow: hidden;
+  border: 1px solid #293039;
+}
+
+.star-icon {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (min-width: 769px) {
+  /* Optional: prevent use on larger screens if you mount both components */
+  .backstage-mobile-container {
+    display: none;
+  }
+}

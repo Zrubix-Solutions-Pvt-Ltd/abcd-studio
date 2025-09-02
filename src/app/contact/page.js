@@ -7,7 +7,7 @@ import Header from '../header/page';
 import Footer from '../footer/page';
 import ContactHeroSection from './components/ContactHeroSection';
 import ContactForm from './components/ContactForm';
-import ContactInfo from './components/ContactInfo';
+import ContactInfo from './components/contactinfo/ContactInfo';
 
 function Contact() {
   const [isMobile, setIsMobile] = useState(false);

@@ -1,0 +1,60 @@
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  background-color: white;
+  color: black;
+  text-align: center;
+}
+
+@media (max-width: 1200px) {
+  .welcome-container {
+    padding: 4rem 8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-container {
+    padding: 3rem 2rem;
+  }
+}
+
+.welcome-title {
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  color: black;
+}
+
+@media (max-width: 768px) {
+  .welcome-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.welcome-paragraph {
+  font-family: "Arial", sans-serif;
+  font-weight: 700;
+  max-width: 1200px;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .welcome-paragraph {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.welcome-paragraph:last-child {
+  margin-bottom: 0;
+}

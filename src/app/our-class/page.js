@@ -1,16 +1,19 @@
 // page.js
 'use client';
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, Suspense } from "react";
+import dynamic from "next/dynamic";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Helmet } from 'react-helmet';
+// import { Helmet } from 'react-helmet'; // not needed here
 import OurStudioClassDetails from "./components/OurClassDetails";
 import Image from "next/image";
+import "./OurStudioClassesSection.css";
+import { useSearchParams } from "next/navigation"; // ADDED
 
 gsap.registerPlugin(ScrollTrigger);
 
-function OurStudioClassesSection({ ImageUrls = [], VideoUrls = [] }) {
+function OurStudioClassesSection() {
   const imageData = [
     {
       src: "https://cdn.prod.website-files.com/5eea1fd06e21541535c81901/6256ebd82354f3764b2a5c18_Kids-5.jpeg",
@@ -46,33 +49,54 @@ function OurStudioClassesSection({ ImageUrls = [], VideoUrls = [] }) {
 
   const containerRef = useRef(null);
   const imageCardRefs = useRef([]);
-  const imgWrapRefs = useRef([]); // wrapper we parallax
+  const imgWrapRefs = useRef([]);     // wrapper we parallax and where Image lives
+  const imageElRefs = useRef([]);     // the actual next/image <img> DOM for zoom
   const svgPathRefs = useRef([]);
 
-  const [showDetails, setShowDetails] = useState(false);
+  const searchParams = useSearchParams(); // ADDED
+
+  // Set correctly on the very first render so there is no flash of the grid
+  const [showDetails, setShowDetails] = useState(() => {
+    // ADDED: avoid window on SSR, read from searchParams
+    return Boolean(searchParams.get('name'));
+  });
+
+  // Keep in sync on browser back/forward or query changes
+  useEffect(() => {
+    // ADDED: react to searchParams changes
+    setShowDetails(Boolean(searchParams.get('name')));
+  }, [searchParams]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get('name');
-    setShowDetails(Boolean(name));
-  }, []);
+    // If we're showing the details page, skip setting up grid animations
+    if (showDetails) return;
 
-  useEffect(() => {
-    const ENABLE_ZOOM = true; // toggle if you want to disable zoom on scroll
+    // Tuning constants
+    const ENABLE_IMG_ZOOM = true;
+    const ENABLE_CARD_ZOOM = true;
+    const PARALLAX_FROM = -30;   // px translateY at card enter
+    const PARALLAX_TO = 20;      // px translateY at card exit
+    const IMG_ZOOM_SCALE = 1.2;  // end scale for image zoom
+    const CARD_ZOOM_SCALE = 1.06;// end scale for card zoom
+
     const ctx = gsap.context(() => {
-      const container = containerRef.current;
       const cards = imageCardRefs.current.filter(Boolean);
 
-      // Parallax for each image wrapper
-      imgWrapRefs.current.forEach((wrap, i) => {
-        const card = imageCardRefs.current[i];
-        if (!wrap || !card) return;
+      // Performance hints
+      gsap.set(imgWrapRefs.current, { willChange: "transform" });
+      gsap.set(cards, { willChange: "transform" });
 
+      cards.forEach((card, i) => {
+        const wrap = imgWrapRefs.current[i];
+        const imgEl = imageElRefs.current[i];
+        if (!card || !wrap) return;
+
+        // Parallax the wrapper vertically across card scroll
         gsap.fromTo(
           wrap,
-          { y: -50 },
+          { y: PARALLAX_FROM },
           {
-            y: 120,
+            y: PARALLAX_TO,
             ease: "none",
             scrollTrigger: {
               trigger: card,
@@ -82,18 +106,16 @@ function OurStudioClassesSection({ ImageUrls = [], VideoUrls = [] }) {
             },
           }
         );
-      });
 
-      // Optional zoom on scroll for each card
-      if (ENABLE_ZOOM) {
-        imageCardRefs.current.forEach((card) => {
-          if (!card) return;
+        // Zoom the image element as it scrolls
+        if (ENABLE_IMG_ZOOM && imgEl) {
           gsap.fromTo(
-            card,
+            imgEl,
             { scale: 1 },
             {
-              scale: 1.06,
+              scale: IMG_ZOOM_SCALE,
               ease: "none",
+              transformOrigin: "center center",
               scrollTrigger: {
                 trigger: card,
                 start: "top bottom",
@@ -102,10 +124,29 @@ function OurStudioClassesSection({ ImageUrls = [], VideoUrls = [] }) {
               },
             }
           );
-        });
-      }
+        }
 
-      // If you use SVG paths animations, keep this. If not, safe to remove.
+        // Zoom the entire card as it scrolls
+        if (ENABLE_CARD_ZOOM) {
+          gsap.fromTo(
+            card,
+            { scale: 1 },
+            {
+              scale: CARD_ZOOM_SCALE,
+              ease: "none",
+              transformOrigin: "center center",
+              scrollTrigger: {
+                trigger: card,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true,
+              },
+            }
+          );
+        }
+      });
+
+      // Optional SVG path effects
       svgPathRefs.current.forEach((p, i) => {
         if (!p) return;
 
@@ -148,13 +189,12 @@ function OurStudioClassesSection({ ImageUrls = [], VideoUrls = [] }) {
 
       return () => {
         window.removeEventListener('load', onLoad);
-        // Kill all ScrollTriggers created within this context
         ScrollTrigger.getAll().forEach(st => st.kill());
       };
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [showDetails]);
 
   const handleClassClick = (classKey) => {
     const url = `/our-class?name=${encodeURIComponent(classKey)}`;
@@ -167,147 +207,21 @@ function OurStudioClassesSection({ ImageUrls = [], VideoUrls = [] }) {
     setShowDetails(false);
   };
 
+  // If ?name is present, render details immediately (no initial grid render)
   if (showDetails) {
     return (
       <>
-        <Helmet>
-          <title>Class Details | Our Classes in Salem</title>
-          <meta name="description" content="View detailed information about our classes." />
-        </Helmet>
-        <OurStudioClassDetails />
+            <Suspense fallback={null}> 
+      
+        <OurStudioClassDetails onBack={handleBackToGrid}/>
+        </Suspense>
       </>
     );
   }
 
   return (
     <>
-      <Helmet>
-        <title>Our Classes | Kids, Adult, Fitness, Online & Private Lessons in Salem</title>
-        <meta
-          name="description"
-          content="Explore our diverse range of classes in Salem, including kids' dance and art, adult workshops, fitness programs, convenient online classes, and personalized private lessons. Find the perfect class for you!"
-        />
-        <meta
-          name="keywords"
-          content="Our Classes Salem, Kids Classes Salem, Adult Classes Salem, Fitness Classes Salem, Online Classes Salem, Private Classes Salem, Dance Classes Salem, Art Classes Salem, Kids Dance Salem, Adult Dance Salem, Kids Art Salem, Adult Art Salem, Fitness Programs Salem, Online Dance Classes, Online Art Classes, Private Dance Lessons Salem, Private Art Lessons Salem, Group Fitness Salem, Children's Classes Salem, Youth Programs Salem, Beginner Dance Salem, Advanced Dance Salem, Dance Workshops Salem, Art Workshops Salem, Studio Classes Salem, Learn Dance Salem, Learn Art Salem, Fitness Training Salem, Virtual Classes Salem, Personalized Training Salem, One-on-One Classes Salem, Best Kids Classes Salem, Top Adult Classes Salem, Salem Fitness Studio, Salem Online Learning, Salem Private Coaching"
-        />
-      </Helmet>
-
-      <style jsx>{`
-        .section-wrapper {
-          background: linear-gradient(180deg, rgb(26, 24, 24, 1) 0%);
-          padding: 20px 20px 60px 20px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .section-heading {
-          color: #fff;
-          font-family: "Impact", "Arial Black", sans-serif;
-          font-size: 3rem;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          margin-bottom: 42px;
-          text-align: center;
-          z-index: 2;
-          position: relative;
-        }
-
-        .menu-section-container {
-          display: flex;
-          justify-content: center;
-          align-items: stretch;
-          gap: 30px;
-          flex-wrap: wrap; /* fix: true -> wrap */
-          width: 100%;
-          max-width: 1500px;
-          z-index: 2;
-          position: relative;
-        }
-
-        .Classs {
-          position: relative;
-          width: calc(33.333% - 20px);
-          min-width: 200px;
-          max-width: 250px;
-          height: 300px;
-          overflow: hidden;
-          cursor: pointer;
-          transition: transform 0.28s ease, box-shadow 0.28s ease;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          align-items: flex-start;
-          text-align: left;
-          border-radius: 8px;
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-          text-decoration: none;
-          will-change: transform; /* smooth zoom */
-        }
-
-        /* Parallax wrapper for the image */
-        .img-wrap {
-          position: absolute;
-          top: -10%;
-          left: 0;
-          width: 100%;
-          height: 120%;
-          filter: brightness(0.55) saturate(1.05);
-          will-change: transform; /* smooth parallax */
-          transition: filter 0.35s ease;
-        }
-
-        /* Next/Image fills inside wrapper */
-        .Classs-image {
-          object-fit: cover;
-        }
-
-        .Classs:hover .img-wrap {
-          filter: brightness(1) saturate(1.05);
-        }
-
-        .star-icon {
-          position: absolute;
-          top: 14px;
-          right: 14px;
-          color: #ffd966;
-          font-size: 28px;
-          z-index: 3;
-          pointer-events: none;
-          text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-        }
-
-        .image-text {
-          position: relative;
-          color: white;
-          font-family: "Impact", "Arial Black", sans-serif;
-          font-size: 1.3rem;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          margin-bottom: 20px;
-          margin-left: 20px;
-          z-index: 1;
-          pointer-events: none;
-          text-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
-        }
-
-        @media (max-width: 900px) {
-          .Classs {
-            width: calc(50% - 20px);
-            max-width: none;
-          }
-        }
-
-        @media (max-width: 600px) {
-          .Classs {
-            width: 100%;
-            height: 260px;
-          }
-        }
-      `}</style>
+      {/* <Helmet> ... </Helmet> */}
 
       <div className="section-wrapper">
         <h2 className="section-heading">Our Classes</h2>
@@ -335,7 +249,16 @@ function OurStudioClassesSection({ ImageUrls = [], VideoUrls = [] }) {
                   sizes="(max-width: 900px) 50vw, 33vw"
                   priority={false}
                   style={{ objectFit: "cover" }}
-                  // If you can't configure next.config for external images, add: unoptimized
+                  // If external domains not whitelisted in next.config, uncomment:
+                  // unoptimized
+                  ref={(node) => {
+                    if (!node) {
+                      imageElRefs.current[index] = null;
+                      return;
+                    }
+                    const img = node?.tagName === 'IMG' ? node : node.querySelector('img');
+                    imageElRefs.current[index] = img || null;
+                  }}
                 />
               </div>
 
@@ -351,4 +274,7 @@ function OurStudioClassesSection({ ImageUrls = [], VideoUrls = [] }) {
   );
 }
 
-export default OurStudioClassesSection;
+// Disable SSR so we can read window at first paint and avoid hydration flash
+export default dynamic(() => Promise.resolve(OurStudioClassesSection), { ssr: false });
+
+// export default OurStudioClassesSection;

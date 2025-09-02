@@ -1,0 +1,115 @@
+.HomeHero-section {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.HomeHero-background-iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+  filter: brightness(0.1);
+}
+
+.HomeHero-background-iframe iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .HomeHero-background-iframe iframe {
+    height: 56.25vw;
+    min-height: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .HomeHero-background-iframe iframe {
+    width: 177.78vh;
+    min-width: 100%;
+    height: 100%;
+  }
+}
+
+.transparent-alt-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.HomeHero-content-overlay {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  will-change: transform;
+}
+
+.HomeHero-title {
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  font-size: 7vw;
+  font-weight: 900;
+  line-height: 0.9;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.HomeHero-subtitle {
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  font-size: 7vw;
+  font-weight: 900;
+  line-height: 0.9;
+  margin-top: 10px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.HomeHero-star-icon {
+  margin-left: 5px;
+  font-size: 2vw;
+  margin-bottom: 10px;
+}
+
+.HomeHero-enquire-button {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 15px 40px;
+  margin-top: 40px;
+  font-family: 'Arial', sans-serif;
+  font-size: 1.2vw;
+  font-weight: 900;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.HomeHero-enquire-button:hover {
+  background-color: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+  .HomeHero-section {
+    display: none;
+  }
+}
